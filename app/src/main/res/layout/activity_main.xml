@@ -47,7 +47,6 @@ tools:context=".MainActivity">
     android:layout_centerHorizontal="true"
     android:textStyle="bold"
     />
-
 <pl.droidsonroids.gif.GifImageView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
