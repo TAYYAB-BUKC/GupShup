@@ -51,11 +51,11 @@ tools:context=".MainActivity">
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentEnd="true"
-    android:layout_alignParentRight="true"
+    android:0layout_alignParentRight="true"
     android:layout_marginEnd="0dp"
     android:layout_marginRight="0dp"
     android:paddingTop="390dp"
-    android:src="@drawable/source" />
-
+    android:src="@drawable/source"
+    android:layout_alignParentRight="true" />
 </RelativeLayout>
 
