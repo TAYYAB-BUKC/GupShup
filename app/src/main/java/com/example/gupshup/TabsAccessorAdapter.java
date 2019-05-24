@@ -44,3 +44,29 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter
     public int getCount()
     {
         return 4;
+    }
+
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position)
+    {
+        switch (position)
+        {
+            case 0:
+                return "Chats";
+
+            case 1:
+                return "Groups";
+
+            case 2:
+                return "Contacts";
+
+            case 3:
+                return "Requests";
+
+            default:
+                return null;
+        }
+    }
+}
