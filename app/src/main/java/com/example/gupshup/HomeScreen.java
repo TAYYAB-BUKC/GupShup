@@ -34,7 +34,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 
-public class HomeScreen extends AppCompatActivity {
+public class HomeScreen extends AppCompatActivity  {
     private Toolbar mToolbar;
     private ViewPager myViewPager;
     private TabLayout myTabLayout;

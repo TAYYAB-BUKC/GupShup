@@ -6,10 +6,15 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,119 +37,32 @@ public class Register extends AppCompatActivity {
     private DatabaseReference RootRef;
 
     private ProgressDialog loadingBar;
+    private RelativeLayout rlayout;
+    private Animation animation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        mAuth = FirebaseAuth.getInstance();
-        RootRef = FirebaseDatabase.getInstance().getReference();
+        Toolbar toolbar = findViewById(R.id.bgHeader);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        InitializeFields();
-
-
-        AlreadyHaveAccountLink.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                SendUserToLoginActivity();
-            }
-        });
-
-
-        CreateAccountButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                CreateNewAccount();
-            }
-        });
+        rlayout = findViewById(R.id.rlayout);
+        animation = AnimationUtils.loadAnimation(this,R.anim.uptodowndiagonal);
+        rlayout.setAnimation(animation);
     }
 
-
-
-
-    private void CreateNewAccount()
-    {
-        String email = UserEmail.getText().toString();
-        String password = UserPassword.getText().toString();
-
-        if (TextUtils.isEmpty(email))
-        {
-            Toast.makeText(this, "Please enter email...", Toast.LENGTH_SHORT).show();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home :
+                onBackPressed();
+                return true;
         }
-        if (TextUtils.isEmpty(password))
-        {
-            Toast.makeText(this, "Please enter password...", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            loadingBar.setTitle("Creating New Account");
-            loadingBar.setMessage("Please wait, while we wre creating new account for you...");
-            loadingBar.setCanceledOnTouchOutside(true);
-            loadingBar.show();
-
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task)
-                        {
-                            if (task.isSuccessful())
-                            {
-                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
-
-                                String currentUserID = mAuth.getCurrentUser().getUid();
-                                RootRef.child("Users").child(currentUserID).setValue("");
-
-
-                                RootRef.child("Users").child(currentUserID).child("device_token")
-                                        .setValue(deviceToken);
-
-                                SendUserToMainActivity();
-                                Toast.makeText(Register.this, "Account Created Successfully...", Toast.LENGTH_SHORT).show();
-                                loadingBar.dismiss();
-                            }
-                            else
-                            {
-                                String message = task.getException().toString();
-                                Toast.makeText(Register.this, "Error : " + message, Toast.LENGTH_SHORT).show();
-                                loadingBar.dismiss();
-                            }
-                        }
-                    });
-        }
+        return super.onOptionsItemSelected(item);
     }
-
-
-
-
-    private void InitializeFields()
-    {
-        CreateAccountButton = (Button) findViewById(R.id.register_button);
-        UserEmail=(EditText)findViewById(R.id.register_email);
-        UserPassword = (EditText) findViewById(R.id.register_password);
-        AlreadyHaveAccountLink = (TextView) findViewById(R.id.already_have_account_link);
-
-        loadingBar = new ProgressDialog(this);
-    }
-
-
-    private void SendUserToLoginActivity()
-    {
-        Intent loginIntent = new Intent(Register.this, MainActivity.class);
-        startActivity(loginIntent);
-    }
-
-
-    private void SendUserToMainActivity()
-    {
-        Intent mainIntent = new Intent(Register.this, MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(mainIntent);
-        finish();
-    }
-
 }
