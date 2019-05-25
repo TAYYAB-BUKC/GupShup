@@ -80,4 +80,19 @@ public class HomeScreen extends AppCompatActivity  {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (currentUser == null) {
+            SendUserToLoginActivity();
+        }
+    }
+
+    private void SendUserToLoginActivity()
+    {
+        Intent registerIntent = new Intent(HomeScreen.this, LoginActivity.class);
+        startActivity(registerIntent);
+    }
+
 }
