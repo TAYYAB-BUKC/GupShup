@@ -50,16 +50,10 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
-        currentUserID = mAuth.getCurrentUser().getUid();
-        RootRef = FirebaseDatabase.getInstance().getReference();
-
 
         myViewPager = (ViewPager) findViewById(R.id.main_tabs_pager);
         myTabsAccessorAdapter = new TabsAccessorAdapter(getSupportFragmentManager());
         myViewPager.setAdapter(myTabsAccessorAdapter);
-
 
 
         myTabLayout = (TabLayout) findViewById(R.id.main_tabs);
@@ -84,32 +78,6 @@ public class HomeScreen extends AppCompatActivity {
             }
         });//closing the setOnClickListener method
 
-
     }
-    protected void onStart()
-    {
-        super.onStart();
-
-        if (currentUser == null)
-        {
-            SendUserToLoginActivity();
-        }
-        else
-        {
-           // updateUserStatus("online");
-
-            //VerifyUserExistance();
-        }
-
-    }
-    private void SendUserToLoginActivity()
-    {
-        Intent loginIntent = new Intent(HomeScreen.this, MainActivity.class);
-        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(loginIntent);
-
-    }
-
-
 
 }
