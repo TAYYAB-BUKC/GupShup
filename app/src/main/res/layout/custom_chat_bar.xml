@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/bgHeader"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/header_register"
+        android:theme="@style/ToolbarTheme"
+        android:elevation="5dp"
+        />
+
+
+    <ImageView
+        android:id="@+id/menu_button"
+        android:layout_width="35dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="37dp"
+        android:layout_alignParentLeft="true"
+        android:elevation="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/left"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/custom_profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:elevation="10dp"
+        android:text="User Name"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/custom_user_last_seen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/custom_profile_name"
+        android:elevation="10dp"
+        android:textColor="#30B4FF"
+        android:textSize="13sp"
+        android:text="Last Seen"
+        android:fontFamily="cursive"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/custom_profile_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:elevation="10dp"
+        android:src="@drawable/man"
+        android:cropToPadding="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true" />
+
+
+
+
+
+
+
+</RelativeLayout>
