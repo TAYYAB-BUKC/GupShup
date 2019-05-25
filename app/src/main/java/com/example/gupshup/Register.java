@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -35,6 +36,7 @@ public class Register extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference RootRef;
+
 
     private ProgressDialog loadingBar;
     private RelativeLayout rlayout;
@@ -65,4 +67,7 @@ public class Register extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
+

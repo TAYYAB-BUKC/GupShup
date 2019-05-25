@@ -29,30 +29,48 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton btRegister;
     private TextView tvLogin;
+
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btRegister  = findViewById(R.id.btRegister);
-        tvLogin     = findViewById(R.id.tvLogin);
+        btRegister = findViewById(R.id.btRegister);
+        tvLogin = findViewById(R.id.tvLogin);
         btRegister.setOnClickListener(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v) {
-        if (v==btRegister){
-            Intent intent   = new Intent(MainActivity.this,Register.class);
-            Pair[] pairs    = new Pair[1];
-            pairs[0] = new Pair<View,String>(tvLogin,"tvLogin");
-            ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,pairs);
-            startActivity(intent,activityOptions.toBundle());
+        if (v == btRegister) {
+            Intent intent = new Intent(MainActivity.this, Register.class);
+            Pair[] pairs = new Pair[1];
+            pairs[0] = new Pair<View, String>(tvLogin, "tvLogin");
+            ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, pairs);
+            startActivity(intent, activityOptions.toBundle());
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (currentUser == null) {
+            SendUserToLoginActivity();
+        }
+    }
+
+    private void SendUserToLoginActivity()
+    {
+        Intent registerIntent = new Intent(MainActivity.this, PhoneLoginActivity.class);
+        startActivity(registerIntent);
+    }
+
 }
 
