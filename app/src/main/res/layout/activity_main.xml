@@ -193,10 +193,10 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/bt_uifb"
-                android:drawableLeft="@drawable/logofacebook"
+                android:drawableLeft="@drawable/phone_logo_1"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="LOGIN WITH FACEBOOK"
+                android:text="LOGIN WITH PHONE NUMBER"
                 android:textColor="@color/colorPurple" />
         </RelativeLayout>
     </ScrollView>
