@@ -21,10 +21,10 @@
         android:layout_width="35dp"
         android:layout_height="18dp"
         android:layout_marginTop="37dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:elevation="10dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/menu_128"
+        android:src="@drawable/left"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
         android:textStyle="bold" />

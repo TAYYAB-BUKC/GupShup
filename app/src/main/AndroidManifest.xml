@@ -13,9 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".GroupChatActivity"></activity>
         <activity
-            android:name=".HomeScreen"
+            android:name=".SettingsActivity"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,11 +24,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".HomeScreen"
+            android:theme="@style/AppTheme.FullScreen"></activity>
+        <activity
             android:name=".Register"
             android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.FullScreen"></activity>
+            android:theme="@style/AppTheme.FullScreen" />
     </application>
 
 </manifest>
