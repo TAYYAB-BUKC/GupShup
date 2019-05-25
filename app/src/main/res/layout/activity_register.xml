@@ -80,6 +80,7 @@
                         android:textStyle="bold" />
 
                     <EditText
+                        android:id="@+id/register_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -112,6 +113,7 @@
                         android:textStyle="bold" />
 
                     <EditText
+                        android:id="@+id/register_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -148,14 +150,28 @@
                 android:elevation="10dp">
 
                 <Button
+                    android:id="@+id/register_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ui"
                     android:text="Sign up"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite" />
+                <TextView
+                    android:id="@+id/already_have_account_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/register_button"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:elevation="5dp"
+                    android:textStyle="bold"
+                    android:text="Already have an Account?"
+                    android:textSize="14sp" />
             </RelativeLayout>
+
         </RelativeLayout>
     </ScrollView>
+
 
 </RelativeLayout>
