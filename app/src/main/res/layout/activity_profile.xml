@@ -56,8 +56,7 @@
         android:id="@+id/send_message_request_button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Accept"
-        android:textColorHint=""
+        android:text="Send Message"
         android:layout_marginTop="60dp"
         android:layout_marginLeft="65dp"
         android:layout_marginRight="65dp"
@@ -66,7 +65,21 @@
         android:background="@drawable/bt_uifb"
         android:textColor="@color/colorPurple"
         android:layout_below="@+id/visit_profile_status"
-        tools:ignore="NotSibling" />
+        />
+    <Button
+        android:id="@+id/cancel_message_request_button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Send Message"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginRight="65dp"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:background="@drawable/bt_uifb"
+        android:textColor="@color/colorPurple"
+        android:layout_below="@+id/send_message_request_button"
+        />
 
 
 

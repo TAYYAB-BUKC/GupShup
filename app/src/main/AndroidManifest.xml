@@ -16,7 +16,6 @@
         <activity android:name=".ProfileActivity"
             android:theme="@style/AppTheme.FullScreen"
             >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
