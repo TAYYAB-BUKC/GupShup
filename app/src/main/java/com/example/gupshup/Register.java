@@ -31,10 +31,10 @@ import com.google.firebase.iid.FirebaseInstanceId;
 public class Register extends AppCompatActivity {
 
     private Button CreateAccountButton;
-    private EditText UserEmail, UserPassword;
+    private EditText UserEmail, UserPassword, Username;
     private TextView AlreadyHaveAccountLink;
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth auth;
     private DatabaseReference RootRef;
 
 
@@ -49,14 +49,6 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         InitializeFields();
-        AlreadyHaveAccountLink.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                SendUserToLoginActivity();
-            }
-        });
     }
 
     @Override
@@ -72,6 +64,7 @@ public class Register extends AppCompatActivity {
 
     private void InitializeFields()
     {
+        auth = FirebaseAuth.getInstance();
         rlayout = findViewById(R.id.rlayout);
         animation = AnimationUtils.loadAnimation(this,R.anim.uptodowndiagonal);
         rlayout.setAnimation(animation);
@@ -82,8 +75,26 @@ public class Register extends AppCompatActivity {
 
         CreateAccountButton = (Button) findViewById(R.id.register_button);
         UserEmail = (EditText) findViewById(R.id.register_email);
+        Username = (EditText) findViewById(R.id.register_username);
         UserPassword = (EditText) findViewById(R.id.register_password);
         AlreadyHaveAccountLink = (TextView) findViewById(R.id.already_have_account_link);
+        loadingBar = new ProgressDialog(this);
+        AlreadyHaveAccountLink.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                SendUserToLoginActivity();
+            }
+        });
+
+        CreateAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                CreateNewUserAccount();
+            }
+        });
     }
 
 
@@ -93,5 +104,47 @@ public class Register extends AppCompatActivity {
         startActivity(loginIntent);
     }
 
+    private void CreateNewUserAccount()
+    {
+        String email = UserEmail.getText().toString();
+        String password = UserPassword.getText().toString();
+        //String username = Username.getText().toString();
+
+
+        if (TextUtils.isEmpty(email))
+        {
+            Toast.makeText(this, "Please enter email...", Toast.LENGTH_LONG).show();
+        }
+        if (TextUtils.isEmpty(password))
+        {
+            Toast.makeText(this, "Please enter password...", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            loadingBar.setTitle("Creating New Account");
+            loadingBar.setMessage("Please wait, while we wre creating new account for you...");
+            loadingBar.setCanceledOnTouchOutside(true);
+            loadingBar.show();
+            auth.createUserWithEmailAndPassword(email,password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task)
+                        {
+                            if (task.isSuccessful())
+                            {
+                                Toast.makeText(Register.this, "Account Created Successfully...", Toast.LENGTH_LONG).show();
+                                loadingBar.dismiss();
+                                SendUserToLoginActivity();
+                            }
+                            else
+                            {
+                                String message = task.getException().toString();
+                                Toast.makeText(Register.this, "Error : " + message, Toast.LENGTH_LONG).show();
+                                loadingBar.dismiss();
+                            }
+                        }
+                    });
+        }
+    }
 }
 
