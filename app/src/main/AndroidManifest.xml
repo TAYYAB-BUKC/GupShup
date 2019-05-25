@@ -10,64 +10,43 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="GupShup"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChatActivity"
-            android:theme="@style/AppTheme.FullScreen"
-            ></activity>
+        <activity android:name=".SplashScreen"></activity>
+        <activity
+            android:name=".ChatActivity"
+            android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".ProfileActivity"
-            android:theme="@style/AppTheme.FullScreen">
-
-        </activity>
+            android:theme="@style/AppTheme.FullScreen"></activity>
         <activity
             android:name=".FindFriendsActivity"
-            android:theme="@style/AppTheme.FullScreen" >
-
-
-        </activity>
+            android:theme="@style/AppTheme.FullScreen"></activity>
         <activity
             android:name=".PhoneLoginActivity"
-            android:theme="@style/AppTheme.FullScreen" >
-
-
-        </activity>
+            android:theme="@style/AppTheme.FullScreen"></activity>
         <activity
             android:name=".GroupChatActivity"
-            android:theme="@style/AppTheme.FullScreen">
-
-        </activity>
+            android:theme="@style/AppTheme.FullScreen"></activity>
         <activity
             android:name=".SettingsActivity"
-            android:theme="@style/AppTheme.FullScreen">
-
-        </activity>
+            android:theme="@style/AppTheme.FullScreen"></activity>
         <activity
             android:name=".HomeScreen"
-            android:theme="@style/AppTheme.FullScreen" >
-
+            android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".Register"
-            android:theme="@style/AppTheme.FullScreen" >
-
-
-        </activity>
+            android:theme="@style/AppTheme.FullScreen"></activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.FullScreen" >
-
-
-
-        </activity>
-
+            android:theme="@style/AppTheme.FullScreen"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D0121"
+    tools:context=".Register">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/bgHeader"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/header_register"
+        android:theme="@style/ToolbarTheme"
+        android:elevation="5dp" />
+
+
+
+    <ImageView
+        android:id="@+id/circle1"
+        android:layout_width="134dp"
+        android:layout_height="134dp"
+        android:layout_below="@+id/bgHeader"
+        android:layout_marginLeft="-25dp"
+        android:layout_marginTop="-5dp"
+        android:src="@drawable/circletransparant" />
+    <TextView
+        android:id="@+id/tvSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="180dp"
+        android:elevation="10dp"
+        android:transitionName="tvLogin"
+        android:text="Gupshup"
+        android:fontFamily="cursive"
+        android:textColor="@color/colorWhite"
+        android:textSize="90sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tvSignUp1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tvSignUp"
+        android:elevation="10dp"
+        android:transitionName="tvLogin"
+        android:text="Bring Strong Connection"
+        android:fontFamily="cursive"
+        android:textColor="#30B4FF"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+   <pl.droidsonroids.gif.GifImageView
+       android:layout_width="900dp"
+       android:layout_height="900dp"
+       android:layout_below="@+id/tvSignUp1"
+       android:src="@drawable/loaader"
+       />
+
+    <ImageView
+        android:id="@+id/circle3"
+        android:layout_width="182dp"
+        android:layout_height="182dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="-100dp"
+        android:layout_marginBottom="-80dp"
+        android:src="@drawable/circle" />
+
+
+
+
+</RelativeLayout>
