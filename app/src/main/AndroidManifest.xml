@@ -9,16 +9,19 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="GupShup"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PhoneLoginActivity"
+        <activity android:name=".FindFriendsActivity"></activity>
+        <activity
+            android:name=".PhoneLoginActivity"
             android:theme="@style/AppTheme.FullScreen">
 
-        ></activity>
-        <activity android:name=".GroupChatActivity"
-            android:theme="@style/AppTheme.FullScreen"></activity>
+        </activity>
+        <activity
+            android:name=".GroupChatActivity"
+            android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".SettingsActivity"
             android:theme="@style/AppTheme.FullScreen">
