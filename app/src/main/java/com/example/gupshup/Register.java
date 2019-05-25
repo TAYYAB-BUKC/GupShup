@@ -48,14 +48,15 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Toolbar toolbar = findViewById(R.id.bgHeader);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        rlayout = findViewById(R.id.rlayout);
-        animation = AnimationUtils.loadAnimation(this,R.anim.uptodowndiagonal);
-        rlayout.setAnimation(animation);
+        InitializeFields();
+        AlreadyHaveAccountLink.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                SendUserToLoginActivity();
+            }
+        });
     }
 
     @Override
@@ -68,6 +69,29 @@ public class Register extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void InitializeFields()
+    {
+        rlayout = findViewById(R.id.rlayout);
+        animation = AnimationUtils.loadAnimation(this,R.anim.uptodowndiagonal);
+        rlayout.setAnimation(animation);
+        Toolbar toolbar = findViewById(R.id.bgHeader);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        CreateAccountButton = (Button) findViewById(R.id.register_button);
+        UserEmail = (EditText) findViewById(R.id.register_email);
+        UserPassword = (EditText) findViewById(R.id.register_password);
+        AlreadyHaveAccountLink = (TextView) findViewById(R.id.already_have_account_link);
+    }
+
+
+    private void SendUserToLoginActivity()
+    {
+        Intent loginIntent = new Intent(Register.this, LoginActivity.class);
+        startActivity(loginIntent);
+    }
 
 }
 
