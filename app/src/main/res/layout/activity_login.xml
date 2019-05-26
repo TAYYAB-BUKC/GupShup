@@ -21,7 +21,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="40dp"
         android:elevation="5dp"
-        android:text="Welcome to apps"
+        android:text="Welcome to GupShup"
         android:textColor="@color/colorWhite"
         android:textSize="17sp" />
 
