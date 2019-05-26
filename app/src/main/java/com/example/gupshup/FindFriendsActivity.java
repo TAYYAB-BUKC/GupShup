@@ -1,13 +1,18 @@
 package com.example.gupshup;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FindFriendsActivity extends AppCompatActivity {
 
@@ -33,5 +38,21 @@ public class FindFriendsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Find Friends");
 
 
-}
+
+     }
+    public static class FindFriendViewHolder extends RecyclerView.ViewHolder
+    {
+        TextView userName, userStatus;
+        CircleImageView profileImage;
+
+
+        public FindFriendViewHolder(@NonNull View itemView)
+        {
+            super(itemView);
+
+            userName = itemView.findViewById(R.id.user_profile_name);
+            userStatus = itemView.findViewById(R.id.user_status);
+            profileImage = itemView.findViewById(R.id.users_profile_image);
+        }
+    }
 }
