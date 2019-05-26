@@ -39,6 +39,8 @@ public class ChatsFragment extends Fragment {
     private FirebaseAuth auth;
     private String currentUserID="";
 
+    private String retImage = "default_image";
+
     public ChatsFragment() {
         // Required empty public constructor
     }
@@ -94,6 +96,7 @@ public class ChatsFragment extends Fragment {
                                             Intent chatIntent = new Intent(getContext(), ChatActivity.class);
                                             chatIntent.putExtra("visit_user_id", usersIDs);
                                             chatIntent.putExtra("visit_user_name", retName);
+                                            chatIntent.putExtra("visit_image", retImage);
                                             startActivity(chatIntent);
                                         }
                                     });
