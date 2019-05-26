@@ -135,10 +135,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
                 InputVerificationCode.setVisibility(View.VISIBLE);
             }
         };
-
     }
-
-
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         auth.signInWithCredential(credential)
