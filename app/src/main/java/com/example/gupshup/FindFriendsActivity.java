@@ -16,6 +16,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -63,7 +64,7 @@ public class FindFriendsActivity extends AppCompatActivity {
                         holder.userName.setText(model.getName());
                         holder.userStatus.setText(model.getStatus());
                         //profile image error
-                        //Picasso.get().load(model.getImage()).placeholder(R.drawable.profile_image).into(holder.profileImage);
+                        Picasso.get().load(model.getImage()).placeholder(R.drawable.man).into(holder.profileImage);
 
 
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
