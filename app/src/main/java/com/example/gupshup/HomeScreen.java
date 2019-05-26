@@ -145,6 +145,20 @@ public class HomeScreen extends AppCompatActivity  {
 
         RootRef.child("Users").child(currentUserID).child("userState")
                 .updateChildren(onlineStateMap);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        super.onOptionsItemSelected(item);
+
+        if (item.getItemId() == R.id.main_logout_option)
+        {
+            updateUserStatus("offline");
+            auth.signOut();
+            SendUserToLoginActivity();
+        }
+
+        return true;
     }
 }
