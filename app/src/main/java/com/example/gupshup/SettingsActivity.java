@@ -33,10 +33,8 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
-
-public class SettingsActivity extends AppCompatActivity {
-
+public class SettingsActivity extends AppCompatActivity
+{
     private Button UpdateAccountSettings;
     private EditText userName, userStatus;
     private CircleImageView userProfileImage;
@@ -51,16 +49,60 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Toolbar SettingsToolBar;
 
-    protected void onCreate(Bundle savedInstanceState) {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
+        RootRef = FirebaseDatabase.getInstance().getReference();
+        UserProfileImagesRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
+
+
         InitializeFields();
+
+        userName.setVisibility(View.INVISIBLE);
+
+
+        UpdateAccountSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+               // UpdateSettings();
+            }
+        });
+
+
+       // RetrieveUserInfo();
+
+
+        userProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Intent galleryIntent = new Intent();
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent, GalleryPick);
+            }
+        });
     }
     private void InitializeFields() {
         UpdateAccountSettings = (Button) findViewById(R.id.update_settings_button);
         userName = (EditText) findViewById(R.id.set_user_name);
         userStatus = (EditText) findViewById(R.id.set_profile_status);
         userProfileImage = (CircleImageView) findViewById(R.id.set_profile_image);
+        loadingBar = new ProgressDialog(this);
+
+      //  SettingsToolBar = (Toolbar) findViewById(R.id.settings_toolbar);
+        setSupportActionBar(SettingsToolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setTitle("Account Settings");
+
     }
     }
