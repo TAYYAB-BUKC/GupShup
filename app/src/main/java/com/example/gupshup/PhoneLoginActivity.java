@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +28,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
 
     private Button SendVerificationCodeButton, VerifyButton;
     private EditText InputPhoneNumber, InputVerificationCode;
+    private TextView phoneText,verificationText;
 
     private FirebaseAuth auth;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks;
@@ -47,7 +49,8 @@ public class PhoneLoginActivity extends AppCompatActivity {
         VerifyButton = (Button) findViewById(R.id.verify_button);
         InputPhoneNumber = (EditText) findViewById(R.id.phone_nnumber_input);
         InputVerificationCode = (EditText) findViewById(R.id.verification_code_input);
-
+        phoneText = (TextView) findViewById(R.id.phone_login_text);
+        verificationText = (TextView) findViewById(R.id.verification_code_text);
 
         SendVerificationCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +81,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
             {
                 SendVerificationCodeButton.setVisibility(View.INVISIBLE);
                 InputPhoneNumber.setVisibility(View.INVISIBLE);
+                verificationText.setVisibility(View.INVISIBLE);
 
                 String verificationCode = InputVerificationCode.getText().toString();
 
@@ -113,9 +117,11 @@ public class PhoneLoginActivity extends AppCompatActivity {
 
                 SendVerificationCodeButton.setVisibility(View.VISIBLE);
                 InputPhoneNumber.setVisibility(View.VISIBLE);
+                phoneText.setVisibility(View.VISIBLE);
 
                 VerifyButton.setVisibility(View.INVISIBLE);
                 InputVerificationCode.setVisibility(View.INVISIBLE);
+                verificationText.setVisibility(View.INVISIBLE);
             }
 
             public void onCodeSent(String VerificationId,
@@ -130,9 +136,12 @@ public class PhoneLoginActivity extends AppCompatActivity {
 
                 SendVerificationCodeButton.setVisibility(View.INVISIBLE);
                 InputPhoneNumber.setVisibility(View.INVISIBLE);
+                phoneText.setVisibility(View.INVISIBLE);
 
                 VerifyButton.setVisibility(View.VISIBLE);
                 InputVerificationCode.setVisibility(View.VISIBLE);
+                verificationText.setVisibility(View.INVISIBLE);
+
             }
         };
     }

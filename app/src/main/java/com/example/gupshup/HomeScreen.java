@@ -39,7 +39,6 @@ public class HomeScreen extends AppCompatActivity  {
     private ViewPager myViewPager;
     private TabLayout myTabLayout;
     private TabsAccessorAdapter myTabsAccessorAdapter;
-    ImageView menu_Img;
 
     private FirebaseUser currentUser;
     private FirebaseAuth auth;
@@ -59,10 +58,10 @@ public class HomeScreen extends AppCompatActivity  {
         myTabsAccessorAdapter = new TabsAccessorAdapter(getSupportFragmentManager());
         myViewPager.setAdapter(myTabsAccessorAdapter);
 
-
         myTabLayout = (TabLayout) findViewById(R.id.main_tabs);
         myTabLayout.setupWithViewPager(myViewPager);
-        menu_Img=(ImageView)findViewById(R.id.menu_button);
+       /* menu_Img=(ImageView)findViewById(R.id.menu_button);
+
         menu_Img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,8 +79,8 @@ public class HomeScreen extends AppCompatActivity  {
 
                 popup.show();//showing popup menu
             }
-        });//closing the setOnClickListener method
-
+        });//closing the setOnClickListener method*/
+        Toast.makeText(this,"onCreate() called successfully",Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -95,7 +94,9 @@ public class HomeScreen extends AppCompatActivity  {
         {
             updateUserStatus("online");
         }
+        Toast.makeText(this,"onStart() called successfully",Toast.LENGTH_LONG).show();
     }
+
 
     @Override
     protected void onStop()
@@ -119,9 +120,11 @@ public class HomeScreen extends AppCompatActivity  {
             updateUserStatus("offline");
         }
     }
+
     private void SendUserToLoginActivity()
     {
         Intent registerIntent = new Intent(HomeScreen.this, LoginActivity.class);
+        registerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(registerIntent);
     }
 
@@ -147,6 +150,17 @@ public class HomeScreen extends AppCompatActivity  {
                 .updateChildren(onlineStateMap);
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -158,7 +172,6 @@ public class HomeScreen extends AppCompatActivity  {
             auth.signOut();
             SendUserToLoginActivity();
         }
-
         return true;
     }
 }

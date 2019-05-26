@@ -56,16 +56,6 @@
         android:fontFamily="cursive"
         />
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/bgHeader"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@drawable/header_register"
-        android:theme="@style/ToolbarTheme"
-        android:elevation="5dp"
-        />
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -97,6 +87,7 @@
                         android:paddingBottom="50dp">
 
                         <TextView
+                            android:id="@+id/phone_login_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
@@ -114,13 +105,15 @@
                             android:inputType="text" />
 
                         <TextView
+                            android:id="@+id/verification_code_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:text="Verification Code"
                             android:textColor="@color/colorPurple"
                             android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="invisible"/>
 
                         <EditText
                             android:id="@+id/verification_code_input"
@@ -128,7 +121,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:inputType="text"/>
+                            android:inputType="text"
+                            android:visibility="invisible"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -161,7 +155,8 @@
                         android:background="@drawable/bg_ui"
                         android:text="Verify"
                         android:textAllCaps="false"
-                        android:textColor="@color/colorWhite" />
+                        android:textColor="@color/colorWhite"
+                        android:visibility="invisible"/>
                 </RelativeLayout>
             </RelativeLayout>
         </RelativeLayout>

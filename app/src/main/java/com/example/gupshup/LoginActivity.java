@@ -59,8 +59,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
             startActivity(intent, activityOptions.toBundle());
         }
-    }
 
+    }
     private void SendUserToMainActivity()
     {
         Intent homeIntent = new Intent(LoginActivity.this, HomeScreen.class);
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         btRegister = findViewById(R.id.btRegister);
         tvLogin = findViewById(R.id.tvLogin);
-        btRegister.setOnClickListener(this);
+
         LoginButton = (Button) findViewById(R.id.login_button);
         PhoneLoginButton = (Button) findViewById(R.id.phone_login_button);
         UserEmail = (EditText) findViewById(R.id.login_email);
@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         NeedNewAccountLink = (TextView) findViewById(R.id.need_new_account_link);
         ForgetPasswordLink = (TextView) findViewById(R.id.forget_password_link);
         loadingBar = new ProgressDialog(this);
-
+        btRegister.setOnClickListener(this);
         NeedNewAccountLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
