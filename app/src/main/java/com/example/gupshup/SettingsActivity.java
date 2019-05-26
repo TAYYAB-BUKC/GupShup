@@ -91,18 +91,94 @@ public class SettingsActivity extends AppCompatActivity
             }
         });
     }
-    private void InitializeFields() {
+    private void InitializeFields()
+    {
         UpdateAccountSettings = (Button) findViewById(R.id.update_settings_button);
         userName = (EditText) findViewById(R.id.set_user_name);
         userStatus = (EditText) findViewById(R.id.set_profile_status);
         userProfileImage = (CircleImageView) findViewById(R.id.set_profile_image);
         loadingBar = new ProgressDialog(this);
 
-      //  SettingsToolBar = (Toolbar) findViewById(R.id.settings_toolbar);
+       // SettingsToolBar = (Toolbar) findViewById(R.id.settings_toolbar);
         setSupportActionBar(SettingsToolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setTitle("Account Settings");
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode==GalleryPick  &&  resultCode==RESULT_OK  &&  data!=null)
+        {
+            Uri ImageUri = data.getData();
+
+            CropImage.activity()
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1, 1)
+                    .start(this);
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+        {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            if (resultCode == RESULT_OK)
+            {
+                loadingBar.setTitle("Set Profile Image");
+                loadingBar.setMessage("Please wait, your profile image is updating...");
+                loadingBar.setCanceledOnTouchOutside(false);
+                loadingBar.show();
+
+                Uri resultUri = result.getUri();
+
+
+                StorageReference filePath = UserProfileImagesRef.child(currentUserID + ".jpg");
+
+                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task)
+                    {
+                        if (task.isSuccessful())
+                        {
+                            Toast.makeText(SettingsActivity.this, "Profile Image uploaded Successfully...", Toast.LENGTH_SHORT).show();
+
+                            final String downloaedUrl;
+                            downloaedUrl = UserProfileImagesRef.getDownloadUrl().toString();
+
+                            RootRef.child("Users").child(currentUserID).child("image")
+                                   .setValue(downloaedUrl)
+                                  .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task)
+                                        {
+                                            if (task.isSuccessful())
+                                            {
+                                                Toast.makeText(SettingsActivity.this, "Image save in Database, Successfully...", Toast.LENGTH_SHORT).show();
+                                                loadingBar.dismiss();
+                                            }
+                                            else
+                                            {
+                                                String message = task.getException().toString();
+                                                Toast.makeText(SettingsActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                                                loadingBar.dismiss();
+                                            }
+                                        }
+                                    });
+                        }
+                        else
+                        {
+                            String message = task.getException().toString();
+                            Toast.makeText(SettingsActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                            loadingBar.dismiss();
+                        }
+                    }
+                });
+            }
+        }
     }
-    }
+
+
+}
