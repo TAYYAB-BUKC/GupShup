@@ -55,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity
         userProfileName = (TextView) findViewById(R.id.visit_user_name);
         userProfileStatus = (TextView) findViewById(R.id.visit_profile_status);
         SendMessageRequestButton = (Button) findViewById(R.id.send_message_request_button);
-       //decline message request button
+
         DeclineMessageRequestButton = (Button) findViewById(R.id.cancel_message_request_button);
         Current_State = "new";
 
@@ -77,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity
                     String userName = dataSnapshot.child("name").getValue().toString();
                     String userstatus = dataSnapshot.child("status").getValue().toString();
 
-                    //Profile image error
+
                     Picasso.get().load(userImage).placeholder(R.drawable.man).into(userProfileImage);
                     userProfileName.setText(userName);
                     userProfileStatus.setText(userstatus);

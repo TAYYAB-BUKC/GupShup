@@ -36,8 +36,8 @@ public class FindFriendsActivity extends AppCompatActivity {
         FindFriendsRecyclerList = (RecyclerView) findViewById(R.id.find_friends_recycler_list);
         FindFriendsRecyclerList.setLayoutManager(new LinearLayoutManager(this));
 
-         //Toolbar find friend method error
-       // mToolbar = (Toolbar) findViewById(R.id.find_friends_toolbar);
+
+       mToolbar = (Toolbar) findViewById(R.id.find_friends_recycler_list);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
