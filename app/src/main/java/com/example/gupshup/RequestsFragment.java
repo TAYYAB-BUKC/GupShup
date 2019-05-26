@@ -277,10 +277,6 @@ public class RequestsFragment extends Fragment {
 
                             }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
                         });
                     }
 
