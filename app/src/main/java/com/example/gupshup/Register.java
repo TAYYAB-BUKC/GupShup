@@ -133,7 +133,7 @@ public class Register extends AppCompatActivity {
                             {
                                 Toast.makeText(Register.this, "Account Created Successfully...", Toast.LENGTH_LONG).show();
                                 loadingBar.dismiss();
-                                SendUserToLoginActivity();
+                                SendUserToMainActivity();
                             }
                             else
                             {
@@ -144,6 +144,13 @@ public class Register extends AppCompatActivity {
                         }
                     });
         }
+    }
+    private void SendUserToMainActivity()
+    {
+        Intent homeIntent = new Intent(Register.this, HomeScreen.class);
+        homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(homeIntent);
+        finish();
     }
 }
 

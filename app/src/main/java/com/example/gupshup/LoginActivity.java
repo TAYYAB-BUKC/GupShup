@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 
@@ -32,12 +34,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tvLogin;
 
     private FirebaseAuth auth;
+    private DatabaseReference RootRef;
     private ProgressDialog loadingBar;
-    FirebaseUser currentUser;
 
     private Button LoginButton, PhoneLoginButton;
     private EditText UserEmail, UserPassword;
     private TextView NeedNewAccountLink, ForgetPasswordLink;
+
 
 
 
@@ -61,25 +64,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (currentUser != null)
-        {
-            SendUserToMainActivity();
-        }
-    }
-
     private void SendUserToMainActivity()
     {
         Intent homeIntent = new Intent(LoginActivity.this, HomeScreen.class);
+        homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(homeIntent);
+        finish();
     }
 
     private void InitializeFields()
     {
-        currentUser = auth.getCurrentUser();
+        auth = FirebaseAuth.getInstance();
         btRegister = findViewById(R.id.btRegister);
         tvLogin = findViewById(R.id.tvLogin);
         btRegister.setOnClickListener(this);
@@ -134,6 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             loadingBar.setCanceledOnTouchOutside(true);
             loadingBar.show();
 
+
             auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -144,7 +140,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 SendUserToMainActivity();
                                 Toast.makeText(LoginActivity.this, "Logged in Successful...", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
-
                             }
                             else
                             {
@@ -156,9 +151,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     });
         }
     }
-
-
-
-
 }
 
