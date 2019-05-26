@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,21 +29,31 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ChatActivity extends AppCompatActivity {
 
-    private String messageReceiverID, messageReceiverName, messageReceiverImage;
+    private String messageReceiverID, messageReceiverName, messageReceiverImage, messageSenderID;
 
     private TextView userName, userLastSeen;
     private CircleImageView userImage;
-
+    private ImageView SendMessageButton;
     private Toolbar ChatToolBar;
+    private FirebaseAuth auth;
+    private DatabaseReference RootRef;
+    private EditText MessageInputText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        auth = FirebaseAuth.getInstance();
+        messageSenderID = auth.getCurrentUser().getUid();
+        RootRef = FirebaseDatabase.getInstance().getReference();
 
         messageReceiverID = getIntent().getExtras().get("visit_user_id").toString();
         messageReceiverName = getIntent().getExtras().get("visit_user_name").toString();
@@ -52,7 +63,15 @@ public class ChatActivity extends AppCompatActivity {
 
         userName.setText(messageReceiverName);
         Picasso.get().load(messageReceiverImage).placeholder(R.drawable.man).into(userImage);
+        SendMessageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                SendMessage();
+            }
+        });
     }
+
 
     private void IntializeFields()
     {
@@ -70,25 +89,54 @@ public class ChatActivity extends AppCompatActivity {
         userName = (TextView) findViewById(R.id.custom_profile_name);
         userLastSeen = (TextView) findViewById(R.id.custom_user_last_seen);
         userImage = (CircleImageView) findViewById(R.id.custom_profile_image);
+        SendMessageButton = (ImageView) findViewById(R.id.send_message_button);
+        MessageInputText = (EditText) findViewById(R.id.input_group_message);
 
-       /* SendMessageButton = (ImageButton) findViewById(R.id.send_message_btn);
-        SendFilesButton = (ImageButton) findViewById(R.id.send_files_btn);
-        MessageInputText = (EditText) findViewById(R.id.input_message);
+    }
 
-        messageAdapter = new MessageAdapter(messagesList);
-        userMessagesList = (RecyclerView) findViewById(R.id.private_messages_list_of_users);
-        linearLayoutManager = new LinearLayoutManager(this);
-        userMessagesList.setLayoutManager(linearLayoutManager);
-        userMessagesList.setAdapter(messageAdapter);
+    private void SendMessage()
+    {
+        String messageText = MessageInputText.getText().toString();
 
+        if (TextUtils.isEmpty(messageText))
+        {
+            Toast.makeText(this, "first write your message...", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            String messageSenderRef = "Messages/" + messageSenderID + "/" + messageReceiverID;
+            String messageReceiverRef = "Messages/" + messageReceiverID + "/" + messageSenderID;
 
-        Calendar calendar = Calendar.getInstance();
+            DatabaseReference userMessageKeyRef = RootRef.child("Messages")
+                    .child(messageSenderID).child(messageReceiverID).push();
 
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
-        saveCurrentDate = currentDate.format(calendar.getTime());
+            String messagePushID = userMessageKeyRef.getKey();
 
-        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
-        saveCurrentTime = currentTime.format(calendar.getTime());*/
+            Map messageTextBody = new HashMap();
+            messageTextBody.put("message", messageText);
+            messageTextBody.put("type", "text");
+            messageTextBody.put("from", messageSenderID);
+
+            Map messageBodyDetails = new HashMap();
+            messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
+            messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
+
+            RootRef.updateChildren(messageBodyDetails).addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task)
+                {
+                    if (task.isSuccessful())
+                    {
+                        Toast.makeText(ChatActivity.this, "Message Sent Successfully...", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(ChatActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                    MessageInputText.setText("");
+                }
+            });
+        }
     }
 
 }
