@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
+                <RecyclerView
                     android:id="@+id/group_chat_text_display"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
