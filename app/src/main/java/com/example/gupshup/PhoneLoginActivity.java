@@ -1,5 +1,6 @@
 package com.example.gupshup;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,9 @@ public class PhoneLoginActivity extends AppCompatActivity {
     private EditText InputPhoneNumber, InputVerificationCode;
 
     private FirebaseAuth auth;
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks;
+
+    private ProgressDialog loadingBar;
 
 
     @Override
@@ -34,5 +38,32 @@ public class PhoneLoginActivity extends AppCompatActivity {
         InputPhoneNumber = (EditText) findViewById(R.id.phone_nnumber_input);
         InputVerificationCode = (EditText) findViewById(R.id.verification_code_input);
 
+
+        SendVerificationCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                String phoneNumber = InputPhoneNumber.getText().toString();
+
+                if (TextUtils.isEmpty(phoneNumber))
+                {
+                    Toast.makeText(PhoneLoginActivity.this, "Please enter your phone number first...", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    loadingBar.setTitle("Phone Verification");
+                    loadingBar.setMessage("please wait, while we are authenticating your phone...");
+                    loadingBar.setCanceledOnTouchOutside(false);
+                    loadingBar.show();
+
+                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                            phoneNumber,        // Phone number to verify
+                            60,                 // Timeout duration
+                            TimeUnit.SECONDS,   // Unit of timeout
+                            PhoneLoginActivity.this,               // Activity (for callback binding)
+                            callbacks);        // OnVerificationStateChangedCallbacks
+                }
+            }
+        });
     }
 }
