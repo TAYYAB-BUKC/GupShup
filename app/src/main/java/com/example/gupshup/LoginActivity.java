@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         auth = FirebaseAuth.getInstance();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
+
         btRegister = findViewById(R.id.btRegister);
         tvLogin = findViewById(R.id.tvLogin);
         btRegister.setOnClickListener(this);

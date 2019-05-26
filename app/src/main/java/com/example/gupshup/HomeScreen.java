@@ -43,6 +43,8 @@ public class HomeScreen extends AppCompatActivity  {
 
     private FirebaseUser currentUser;
     private FirebaseAuth auth;
+    private DatabaseReference RootRef;
+    private String currentUserID;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,8 @@ public class HomeScreen extends AppCompatActivity  {
 
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
+        currentUserID = auth.getCurrentUser().getUid();
+        RootRef = FirebaseDatabase.getInstance().getReference();
 
         myViewPager = (ViewPager) findViewById(R.id.main_tabs_pager);
         myTabsAccessorAdapter = new TabsAccessorAdapter(getSupportFragmentManager());
@@ -87,12 +91,60 @@ public class HomeScreen extends AppCompatActivity  {
         if (currentUser == null) {
             SendUserToLoginActivity();
         }
+        else
+        {
+            updateUserStatus("online");
+        }
     }
 
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+
+        if (currentUser != null)
+        {
+            updateUserStatus("offline");
+        }
+    }
+
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+
+        if (currentUser != null)
+        {
+            updateUserStatus("offline");
+        }
+    }
     private void SendUserToLoginActivity()
     {
         Intent registerIntent = new Intent(HomeScreen.this, LoginActivity.class);
         startActivity(registerIntent);
     }
 
+
+    private void updateUserStatus(String state)
+    {
+        String saveCurrentTime, saveCurrentDate;
+
+        Calendar calendar = Calendar.getInstance();
+
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+        saveCurrentDate = currentDate.format(calendar.getTime());
+
+        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+        saveCurrentTime = currentTime.format(calendar.getTime());
+
+        HashMap<String, Object> onlineStateMap = new HashMap<>();
+        onlineStateMap.put("time", saveCurrentTime);
+        onlineStateMap.put("date", saveCurrentDate);
+        onlineStateMap.put("state", state);
+
+        RootRef.child("Users").child(currentUserID).child("userState")
+                .updateChildren(onlineStateMap);
+
+    }
 }
