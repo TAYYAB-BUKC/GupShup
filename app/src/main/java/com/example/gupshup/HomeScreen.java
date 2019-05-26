@@ -42,14 +42,14 @@ public class HomeScreen extends AppCompatActivity  {
     ImageView menu_Img;
 
     private FirebaseUser currentUser;
-    private FirebaseAuth mAuth;
-    private DatabaseReference RootRef;
-    private String currentUserID;
+    private FirebaseAuth auth;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        auth = FirebaseAuth.getInstance();
+        currentUser = auth.getCurrentUser();
 
         myViewPager = (ViewPager) findViewById(R.id.main_tabs_pager);
         myTabsAccessorAdapter = new TabsAccessorAdapter(getSupportFragmentManager());
@@ -78,6 +78,21 @@ public class HomeScreen extends AppCompatActivity  {
             }
         });//closing the setOnClickListener method
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (currentUser == null) {
+            SendUserToLoginActivity();
+        }
+    }
+
+    private void SendUserToLoginActivity()
+    {
+        Intent registerIntent = new Intent(HomeScreen.this, LoginActivity.class);
+        startActivity(registerIntent);
     }
 
 }

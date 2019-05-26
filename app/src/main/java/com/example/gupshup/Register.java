@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -30,11 +31,12 @@ import com.google.firebase.iid.FirebaseInstanceId;
 public class Register extends AppCompatActivity {
 
     private Button CreateAccountButton;
-    private EditText UserEmail, UserPassword;
+    private EditText UserEmail, UserPassword, Username;
     private TextView AlreadyHaveAccountLink;
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth auth;
     private DatabaseReference RootRef;
+
 
     private ProgressDialog loadingBar;
     private RelativeLayout rlayout;
@@ -46,14 +48,7 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Toolbar toolbar = findViewById(R.id.bgHeader);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        rlayout = findViewById(R.id.rlayout);
-        animation = AnimationUtils.loadAnimation(this,R.anim.uptodowndiagonal);
-        rlayout.setAnimation(animation);
+        InitializeFields();
     }
 
     @Override
@@ -65,4 +60,97 @@ public class Register extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void InitializeFields()
+    {
+        auth = FirebaseAuth.getInstance();
+        rlayout = findViewById(R.id.rlayout);
+        animation = AnimationUtils.loadAnimation(this,R.anim.uptodowndiagonal);
+        rlayout.setAnimation(animation);
+        Toolbar toolbar = findViewById(R.id.bgHeader);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        CreateAccountButton = (Button) findViewById(R.id.register_button);
+        UserEmail = (EditText) findViewById(R.id.register_email);
+        Username = (EditText) findViewById(R.id.register_username);
+        UserPassword = (EditText) findViewById(R.id.register_password);
+        AlreadyHaveAccountLink = (TextView) findViewById(R.id.already_have_account_link);
+        loadingBar = new ProgressDialog(this);
+        AlreadyHaveAccountLink.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                SendUserToLoginActivity();
+            }
+        });
+
+        CreateAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                CreateNewUserAccount();
+            }
+        });
+    }
+
+
+    private void SendUserToLoginActivity()
+    {
+        Intent loginIntent = new Intent(Register.this, LoginActivity.class);
+        startActivity(loginIntent);
+    }
+
+    private void CreateNewUserAccount()
+    {
+        String email = UserEmail.getText().toString();
+        String password = UserPassword.getText().toString();
+        //String username = Username.getText().toString();
+
+
+        if (TextUtils.isEmpty(email))
+        {
+            Toast.makeText(this, "Please enter email...", Toast.LENGTH_LONG).show();
+        }
+        if (TextUtils.isEmpty(password))
+        {
+            Toast.makeText(this, "Please enter password...", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            loadingBar.setTitle("Creating New Account");
+            loadingBar.setMessage("Please wait, while we wre creating new account for you...");
+            loadingBar.setCanceledOnTouchOutside(true);
+            loadingBar.show();
+            auth.createUserWithEmailAndPassword(email,password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task)
+                        {
+                            if (task.isSuccessful())
+                            {
+                                Toast.makeText(Register.this, "Account Created Successfully...", Toast.LENGTH_LONG).show();
+                                loadingBar.dismiss();
+                                SendUserToMainActivity();
+                            }
+                            else
+                            {
+                                String message = task.getException().toString();
+                                Toast.makeText(Register.this, "Error : " + message, Toast.LENGTH_LONG).show();
+                                loadingBar.dismiss();
+                            }
+                        }
+                    });
+        }
+    }
+    private void SendUserToMainActivity()
+    {
+        Intent homeIntent = new Intent(Register.this, HomeScreen.class);
+        homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(homeIntent);
+        finish();
+    }
 }
+
