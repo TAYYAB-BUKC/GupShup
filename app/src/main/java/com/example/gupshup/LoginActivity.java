@@ -34,15 +34,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tvLogin;
 
     private FirebaseAuth auth;
-    private DatabaseReference RootRef;
+    private DatabaseReference UsersRef;
     private ProgressDialog loadingBar;
 
     private Button LoginButton, PhoneLoginButton;
     private EditText UserEmail, UserPassword;
     private TextView NeedNewAccountLink, ForgetPasswordLink;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +72,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void InitializeFields()
     {
         auth = FirebaseAuth.getInstance();
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
         btRegister = findViewById(R.id.btRegister);
         tvLogin = findViewById(R.id.tvLogin);
         btRegister.setOnClickListener(this);
@@ -147,9 +146,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         {
                             if (task.isSuccessful())
                             {
-                                SendUserToMainActivity();
-                                Toast.makeText(LoginActivity.this, "Logged in Successful...", Toast.LENGTH_SHORT).show();
-                                loadingBar.dismiss();
+                                String currentUserId = auth.getCurrentUser().getUid();
+                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
+
+                                UsersRef.child(currentUserId).child("device_token")
+                                        .setValue(deviceToken)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task)
+                                            {
+                                                if (task.isSuccessful())
+                                                {
+                                                    SendUserToMainActivity();
+                                                    Toast.makeText(LoginActivity.this, "Logged in Successful...", Toast.LENGTH_SHORT).show();
+                                                    loadingBar.dismiss();
+                                                }
+                                            }
+                                        });
                             }
                             else
                             {

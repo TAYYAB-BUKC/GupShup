@@ -64,6 +64,8 @@ public class Register extends AppCompatActivity {
     private void InitializeFields()
     {
         auth = FirebaseAuth.getInstance();
+        RootRef = FirebaseDatabase.getInstance().getReference();
+
         rlayout = findViewById(R.id.rlayout);
         animation = AnimationUtils.loadAnimation(this,R.anim.uptodowndiagonal);
         rlayout.setAnimation(animation);
@@ -131,6 +133,13 @@ public class Register extends AppCompatActivity {
                         {
                             if (task.isSuccessful())
                             {
+                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
+
+                                String currentUserID = auth.getCurrentUser().getUid();
+                                RootRef.child("Users").child(currentUserID).setValue("");
+
+                                RootRef.child("Users").child(currentUserID).child("device_token")
+                                        .setValue(deviceToken);
                                 Toast.makeText(Register.this, "Account Created Successfully...", Toast.LENGTH_LONG).show();
                                 loadingBar.dismiss();
                                 SendUserToMainActivity();
