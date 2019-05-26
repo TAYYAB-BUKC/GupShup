@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -55,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity
         userProfileStatus = (TextView) findViewById(R.id.visit_profile_status);
         SendMessageRequestButton = (Button) findViewById(R.id.send_message_request_button);
        //decline message request button
-        // DeclineMessageRequestButton = (Button) findViewById(R.id.decline_message_request_button);
+        DeclineMessageRequestButton = (Button) findViewById(R.id.cancel_message_request_button);
         Current_State = "new";
 
 
@@ -77,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity
                     String userstatus = dataSnapshot.child("status").getValue().toString();
 
                     //Profile image error
-                   // Picasso.get().load(userImage).placeholder(R.drawable.profile_image).into(userProfileImage);
+                    Picasso.get().load(userImage).placeholder(R.drawable.man).into(userProfileImage);
                     userProfileName.setText(userName);
                     userProfileStatus.setText(userstatus);
 
