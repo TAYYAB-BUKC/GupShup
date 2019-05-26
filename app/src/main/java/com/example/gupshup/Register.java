@@ -61,7 +61,6 @@ public class Register extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     private void InitializeFields()
     {
         auth = FirebaseAuth.getInstance();
