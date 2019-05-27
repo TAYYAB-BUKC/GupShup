@@ -69,12 +69,12 @@ public class SettingsActivity extends AppCompatActivity {
         UpdateAccountSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //   UpdateSettings();
+                UpdateSettings();
             }
         });
 
 
-        // RetrieveUserInfo();
+         RetrieveUserInfo();
 
 
         userProfileImage.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +96,7 @@ public class SettingsActivity extends AppCompatActivity {
         userProfileImage = (CircleImageView) findViewById(R.id.set_profile_image);
         loadingBar = new ProgressDialog(this);
 
-        // SettingsToolBar = (Toolbar) findViewById(R.id.settings_toolbar);
+        SettingsToolBar = (Toolbar) findViewById(R.id.bgHeader);
         setSupportActionBar(SettingsToolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -166,9 +166,9 @@ public class SettingsActivity extends AppCompatActivity {
                         }
                         else
                         {
+                            loadingBar.dismiss();
                             String message = task.getException().toString();
                             Toast.makeText(SettingsActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-                            loadingBar.dismiss();
                         }
                     }
                 });
@@ -205,7 +205,7 @@ public class SettingsActivity extends AppCompatActivity {
                         {
                             if (task.isSuccessful())
                             {
-                            //    SendUserToMainActivity();
+                                SendUserToMainActivity();
                                 Toast.makeText(SettingsActivity.this, "Profile Updated Successfully...", Toast.LENGTH_SHORT).show();
                             }
                             else

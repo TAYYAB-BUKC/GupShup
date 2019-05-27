@@ -46,6 +46,7 @@ public class ContactsFragment extends Fragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        ContactsView = inflater.inflate(R.layout.fragment_contacts, container, false);
 
 
         myContactsList = (RecyclerView) ContactsView.findViewById(R.id.contacts_list);
@@ -117,11 +118,7 @@ public class ContactsFragment extends Fragment
 
                                 holder.userName.setText(profileName);
                                 holder.userStatus.setText(profileStatus);
-
-                                // after profile settings configuration profile image will be set
-
-
-                               Picasso.get().load(userImage).placeholder(R.drawable.man).into(holder.profileImage);
+                                Picasso.get().load(userImage).placeholder(R.drawable.man).into(holder.profileImage);
                             }
                             else
                             {
@@ -133,7 +130,6 @@ public class ContactsFragment extends Fragment
                             }
                         }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 

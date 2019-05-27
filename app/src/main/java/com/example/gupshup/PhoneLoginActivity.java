@@ -159,6 +159,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
                         }
                         else
                         {
+                            loadingBar.dismiss();
                             String message = task.getException().toString();
                             Toast.makeText(PhoneLoginActivity.this, "Error : "  +  message, Toast.LENGTH_SHORT).show();
                         }

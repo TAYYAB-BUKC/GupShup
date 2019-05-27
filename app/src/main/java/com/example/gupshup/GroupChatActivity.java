@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class GroupChatActivity extends AppCompatActivity {
+
     private Toolbar mToolbar;
     private ImageView SendMessageButton;
     private EditText userMessageInput;

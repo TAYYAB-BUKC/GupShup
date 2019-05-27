@@ -147,23 +147,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         {
                             if (task.isSuccessful())
                             {
-                                String currentUserId = auth.getCurrentUser().getUid();
-                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
 
-                                UsersRef.child(currentUserId).child("device_token")
-                                        .setValue(deviceToken)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task)
-                                            {
-                                                if (task.isSuccessful())
-                                                {
-                                                    SendUserToMainActivity();
                                                     Toast.makeText(LoginActivity.this, "Logged in Successful...", Toast.LENGTH_SHORT).show();
                                                     loadingBar.dismiss();
-                                                }
-                                            }
-                                        });
+                                                    SendUserToMainActivity();
+
+
                             }
                             else
                             {
